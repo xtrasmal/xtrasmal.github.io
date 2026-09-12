@@ -1,0 +1,418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="HorizonCode — the Horizon theme rebuilt for Zed and Helix: dark and bright, fully scoped, schema-audited.">
+<meta property="og:title" content="HorizonCode — theme family">
+<meta property="og:description" content="Horizon, faithfully. 167 colour keys, 108 syntax scopes, dark + bright.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌅</text></svg>">
+<style>html{color-scheme:dark}body{margin:0}img{max-width:100%}</style>
+</head>
+<body>
+<title>HorizonCode — theme family</title>
+<style>
+  :root{
+    --wall:#15161D; --wall-2:#1b1d26; --edge:#2a2c3a; --edge-soft:#23252f;
+    --ink:#D5D8DA; --mute:#8a8da8; --faint:#5b5e78;
+    --pink:#EE64AE; --purple:#B877DB; --orange:#FAB795; --red:#E95678; --green:#29D398;
+    --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    --horizon:linear-gradient(90deg,#FAB795 0%,#EE64AE 52%,#B877DB 100%);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--wall); color:var(--ink);
+    font-family:var(--sans); line-height:1.6;
+    font-size:16px; letter-spacing:.01em;
+    background-image:radial-gradient(120% 80% at 50% -10%, #1d1f2b 0%, var(--wall) 60%);
+  }
+  .wrap{max-width:1080px; margin:0 auto; padding:clamp(28px,5vw,72px) clamp(18px,4vw,40px) 72px;}
+
+  /* ---------- hero ---------- */
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; letter-spacing:.32em; text-transform:uppercase;
+    color:var(--faint); margin:0 0 18px;
+  }
+  h1{
+    font-family:var(--mono); font-weight:600; text-wrap:balance;
+    font-size:clamp(38px,7vw,72px); line-height:1.02; letter-spacing:-.02em;
+    margin:0; color:#fff;
+  }
+  h1 .sun{background:var(--horizon); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .lede{
+    max-width:60ch; margin:20px 0 0; color:var(--mute); font-size:clamp(16px,2.2vw,18px);
+  }
+  .hrule{height:2px; border:0; margin:30px 0 0; background:var(--horizon); border-radius:2px; opacity:.9;}
+
+  /* ---------- section scaffolding ---------- */
+  section{margin-top:clamp(44px,7vw,84px);}
+  .sec-head{display:flex; align-items:baseline; gap:14px; margin:0 0 22px;}
+  .sec-head h2{
+    font-family:var(--mono); font-weight:600; font-size:15px; letter-spacing:.02em;
+    margin:0; color:var(--ink);
+  }
+  .sec-head .idx{font-family:var(--mono); font-size:12px; color:var(--faint); letter-spacing:.2em;}
+  .sec-head .rule{flex:1; height:1px; background:var(--edge);}
+
+  /* ---------- editor specimens ---------- */
+  .specimens{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  @media (max-width:820px){ .specimens{grid-template-columns:1fr;} }
+
+  .editor{
+    border:1px solid var(--edge); border-radius:12px; overflow:hidden;
+    background:var(--bg); box-shadow:0 24px 60px -30px rgba(0,0,0,.75), 0 2px 0 rgba(255,255,255,.02) inset;
+  }
+  .ed-bar{
+    display:flex; align-items:center; gap:12px; padding:10px 14px;
+    background:var(--panel); border-bottom:1px solid color-mix(in srgb,var(--bg) 60%, #000 12%);
+    font-family:var(--mono); font-size:12px;
+  }
+  .traffic{display:flex; gap:7px;}
+  .traffic i{width:11px; height:11px; border-radius:50%; display:block; opacity:.9;}
+  .traffic i:nth-child(1){background:var(--red)}
+  .traffic i:nth-child(2){background:var(--str)}
+  .traffic i:nth-child(3){background:var(--grn)}
+  .ed-file{color:var(--txt); opacity:.85}
+  .ed-variant{margin-left:auto; color:var(--gut); letter-spacing:.04em}
+
+  .ed-main{display:flex; overflow-x:auto; background:var(--bg);}
+  .gutter{
+    flex:0 0 auto; text-align:right; padding:14px 10px 16px; user-select:none;
+    font-family:var(--mono); font-size:12.5px; line-height:1.65; color:var(--gut);
+    font-variant-numeric:tabular-nums;
+  }
+  .gutter span{display:block; opacity:.6}
+  .gutter span.g-cur{opacity:1; color:var(--txt); font-weight:600}
+  pre.code{
+    margin:0; padding:14px 18px 16px 6px; flex:1 1 auto; min-width:0;
+    font-family:var(--mono); font-size:12.5px; line-height:1.65; color:var(--txt);
+    tab-size:4; white-space:pre;
+  }
+  .ln{display:block; padding:0 8px; border-radius:4px;}
+  .ln.cur{background:var(--cur);}
+  .sel{background:var(--sel); border-radius:3px; padding:1px 0; box-decoration-break:clone;}
+  .cursor{background:var(--txt); color:var(--bg); border-radius:1px;}
+  @media (prefers-reduced-motion:no-preference){
+    .cursor{animation:blink 1.15s steps(1) infinite;}
+    @keyframes blink{50%{background:transparent; color:inherit;}}
+  }
+
+  .ed-status{
+    display:flex; align-items:center; gap:12px; padding:0; font-family:var(--mono); font-size:11.5px;
+    background:var(--panel); color:var(--gut); border-top:1px solid color-mix(in srgb,var(--bg) 60%, #000 12%);
+  }
+  .mode{background:var(--mode-bg); color:var(--bg); font-weight:700; letter-spacing:.12em; padding:6px 12px;}
+  .ed-status .st-file{padding:6px 0; color:var(--txt); opacity:.8}
+  .ed-status .st-pos{margin-left:auto; padding:6px 14px; color:var(--gut);}
+
+  /* per-specimen palettes (exact theme values) */
+  .ed-dark{
+    --bg:#1C1E26; --panel:#16161C; --cur:#22242F; --sel:#353747; --gut:#6C6F93; --txt:#D5D8DA;
+    --kw:#B877DB; --typ:#FAC29A; --fn:#25B2BC; --str:#FAB795; --num:#FAB795; --com:#6C6F93; --op:#BBBBBB;
+    --var:#E95678; --attr:#F09383; --brk:#B877DB; --ns:#FAB795; --grn:#27D796; --mode-bg:#E95678;
+  }
+  .ed-bright{
+    --bg:#FDF0ED; --panel:#FADAD1; --cur:#FBE7E0; --sel:#F6C6B7; --gut:#8a7d82; --txt:#06060C;
+    --kw:#8A31B9; --typ:#F77D26; --fn:#1D8991; --str:#F6661E; --num:#F6661E; --com:#6C6F93; --op:#333333;
+    --var:#DA103F; --attr:#DC3318; --brk:#8A31B9; --ns:#F6661E; --grn:#0E9E68; --mode-bg:#DA103F;
+  }
+  .t-kw{color:var(--kw)} .t-typ{color:var(--typ)} .t-fn{color:var(--fn)} .t-str{color:var(--str)}
+  .t-num{color:var(--num)} .t-com{color:var(--com); font-style:italic} .t-op{color:var(--op)}
+  .t-var{color:var(--var)} .t-attr{color:var(--attr)} .t-brk{color:var(--brk)} .t-ns{color:var(--ns)}
+  .t-mac{color:var(--fn)}
+
+  /* ---------- palette rows ---------- */
+  .pal{display:grid; grid-template-columns:repeat(auto-fill,minmax(132px,1fr)); gap:10px;}
+  .pal-group + .pal-group{margin-top:26px;}
+  .pal-title{font-family:var(--mono); font-size:12px; color:var(--mute); letter-spacing:.06em; margin:0 0 12px;}
+  .sw{
+    display:flex; align-items:center; gap:10px; padding:8px 10px; border-radius:9px;
+    background:var(--wall-2); border:1px solid var(--edge-soft);
+  }
+  .sw .chip{width:22px; height:22px; border-radius:6px; flex:0 0 auto; box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);}
+  .sw .meta{display:flex; flex-direction:column; min-width:0;}
+  .sw .role{font-family:var(--sans); font-size:12.5px; color:var(--ink);}
+  .sw .hex{font-family:var(--mono); font-size:11px; color:var(--faint); text-transform:uppercase; letter-spacing:.03em;}
+
+  /* ---------- stats ---------- */
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  @media (max-width:680px){ .stats{grid-template-columns:repeat(2,1fr);} }
+  .stat{
+    padding:18px 18px 16px; border-radius:11px; background:var(--wall-2);
+    border:1px solid var(--edge-soft); position:relative; overflow:hidden;
+  }
+  .stat::before{content:""; position:absolute; left:0; top:0; height:100%; width:3px; background:var(--horizon); opacity:.85;}
+  .stat .n{font-family:var(--mono); font-size:26px; font-weight:600; color:#fff; letter-spacing:-.01em; font-variant-numeric:tabular-nums;}
+  .stat .n small{font-size:14px; color:var(--mute); font-weight:400;}
+  .stat .k{font-size:12.5px; color:var(--mute); margin-top:4px;}
+
+  /* ---------- coverage ledger ---------- */
+  .ledger{display:grid; grid-template-columns:repeat(auto-fill,minmax(228px,1fr)); gap:12px;}
+  .grp{
+    padding:14px 15px 13px; border-radius:10px; background:var(--wall-2);
+    border:1px solid var(--edge-soft);
+  }
+  .grp .gh{display:flex; align-items:baseline; gap:8px; margin-bottom:7px;}
+  .grp .gn{font-family:var(--mono); font-size:12.5px; color:#fff; letter-spacing:.01em;}
+  .grp .gc{margin-left:auto; font-family:var(--mono); font-size:11px; color:var(--green);}
+  .grp .gk{font-family:var(--mono); font-size:11px; color:var(--faint); line-height:1.75; word-break:break-word;}
+  .ok{color:var(--green)}
+
+  .scopes{
+    display:flex; flex-wrap:wrap; gap:6px; margin-top:4px;
+  }
+  .scope{
+    font-family:var(--mono); font-size:11px; color:var(--mute);
+    background:var(--wall-2); border:1px solid var(--edge-soft);
+    padding:3px 8px; border-radius:20px; white-space:nowrap;
+  }
+  .scope.new{color:var(--orange); border-color:#3a3020;}
+
+  /* ---------- activation ---------- */
+  .cmd{
+    background:#12131a; border:1px solid var(--edge); border-radius:11px; overflow-x:auto;
+    padding:18px 20px; font-family:var(--mono); font-size:13px; line-height:1.9; color:var(--ink);
+  }
+  .cmd .c{color:var(--purple)} .cmd .a{color:var(--orange)} .cmd .hash{color:var(--faint)}
+  .note{color:var(--mute); font-size:14px; max-width:66ch;}
+  .note b{color:var(--ink); font-weight:600;}
+  .note code{font-family:var(--mono); font-size:12.5px; color:var(--orange); background:var(--wall-2); padding:1px 6px; border-radius:5px; border:1px solid var(--edge-soft);}
+
+  /* ---------- runs everywhere ---------- */
+  .tools{display:grid; grid-template-columns:repeat(auto-fill,minmax(158px,1fr)); gap:12px;}
+  .tool{display:flex; flex-direction:column; gap:9px; padding:15px 16px; border-radius:10px; background:var(--wall-2); border:1px solid var(--edge-soft);}
+  .tool-name{font-family:var(--mono); font-size:14.5px; color:#fff; letter-spacing:.01em;}
+  .tool-tag{font-family:var(--mono); font-size:10px; letter-spacing:.06em; text-transform:uppercase; padding:3px 9px; border-radius:20px; align-self:flex-start;}
+  .tool-tag.native{color:#16161C; background:var(--horizon); font-weight:600;}
+  .tool-tag.gen{color:var(--mute); background:transparent; border:1px solid var(--edge);}
+
+  footer{margin-top:64px; padding-top:22px; border-top:1px solid var(--edge); color:var(--faint); font-size:12.5px; font-family:var(--mono); letter-spacing:.02em;}
+  a{color:var(--pink); text-decoration:none;} a:hover{text-decoration:underline;}
+  :focus-visible{outline:2px solid var(--pink); outline-offset:3px; border-radius:4px;}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">One palette · every editor · dark + bright</p>
+    <h1>Horizon<span class="sun">Code</span></h1>
+    <p class="lede">A faithful port of the Horizon theme, rebuilt from the official
+      <span style="font-family:var(--mono);font-size:.92em">horizon-theme-vscode</span> palette — hand-built, fully-scoped themes for
+      <b style="color:var(--ink);font-weight:600">Helix</b> and <b style="color:var(--ink);font-weight:600">Zed</b>,
+      a native <b style="color:var(--ink);font-weight:600">iTerm2</b> scheme, and 30+ generated terminal formats.
+      The Zed themes are checked key-by-key against Zed’s published theme schema — see <span style="font-family:var(--mono);font-size:.92em">05</span>.</p>
+    <hr class="hrule">
+  </header>
+
+  <section>
+    <div class="sec-head"><span class="idx">01</span><h2>Specimens</h2><span class="rule"></span></div>
+    <div class="specimens">
+      <figure class="editor ed-dark" style="margin:0">
+        <figcaption class="ed-bar"><span class="traffic"><i></i><i></i><i></i></span><span class="ed-file">send_magic_link_email.ex</span><span class="ed-variant">HorizonCode Dark</span></figcaption>
+        <div class="ed-main"><div class="gutter" aria-hidden="true"></div><pre class="code"></pre></div>
+        <div class="ed-status"><span class="mode">NOR</span><span class="st-file">send_magic_link_email.ex</span><span class="st-pos">elixir · 16:28</span></div>
+      </figure>
+      <figure class="editor ed-bright" style="margin:0">
+        <figcaption class="ed-bar"><span class="traffic"><i></i><i></i><i></i></span><span class="ed-file">send_magic_link_email.ex</span><span class="ed-variant">HorizonCode Bright</span></figcaption>
+        <div class="ed-main"><div class="gutter" aria-hidden="true"></div><pre class="code"></pre></div>
+        <div class="ed-status"><span class="mode">NOR</span><span class="st-file">send_magic_link_email.ex</span><span class="st-pos">elixir · 16:28</span></div>
+      </figure>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">02</span><h2>Palettes</h2><span class="rule"></span></div>
+    <div class="pal-group">
+      <p class="pal-title">Horizon Dark — on #1C1E26</p>
+      <div class="pal" id="pal-dark"></div>
+    </div>
+    <div class="pal-group">
+      <p class="pal-title">Horizon Bright — on #FDF0ED</p>
+      <div class="pal" id="pal-bright"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">03</span><h2>Runs everywhere</h2><span class="rule"></span></div>
+    <div class="tools">
+      <div class="tool"><span class="tool-name">Helix</span><span class="tool-tag native">native · 158 scopes</span></div>
+      <div class="tool"><span class="tool-name">Zed</span><span class="tool-tag native">native · 167 keys · 108 scopes</span></div>
+      <div class="tool"><span class="tool-name">iTerm2</span><span class="tool-tag native">native scheme</span></div>
+      <div class="tool"><span class="tool-name">WezTerm</span><span class="tool-tag gen">generated</span></div>
+      <div class="tool"><span class="tool-name">Kitty</span><span class="tool-tag gen">generated</span></div>
+      <div class="tool"><span class="tool-name">Alacritty</span><span class="tool-tag gen">generated</span></div>
+      <div class="tool"><span class="tool-name">Ghostty</span><span class="tool-tag gen">generated</span></div>
+      <div class="tool"><span class="tool-name">+ 30 formats</span><span class="tool-tag gen">via color-schemes</span></div>
+    </div>
+    <p class="note" style="margin-top:20px">Editors get hand-built, fully-scoped themes; terminals need only the 16-colour
+      palette, so one YAML source fans out to 30+ formats automatically — <b>same Horizon, everywhere</b>.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">04</span><h2>The Helix rebuild</h2><span class="rule"></span></div>
+    <div class="stats">
+      <div class="stat"><div class="n">158<small> /68</small></div><div class="k">scopes covered — up from the official theme’s 68</div></div>
+      <div class="stat"><div class="n">0</div><div class="k">warnings on load, verified live in Helix 25.07</div></div>
+      <div class="stat"><div class="n">2</div><div class="k">real bugs fixed: <span style="font-family:var(--mono);font-size:.85em">diagnostic.*</span> typo &amp; undefined <span style="font-family:var(--mono);font-size:.85em">yellow</span></div></div>
+      <div class="stat"><div class="n">1 → 2</div><div class="k">one structure, two grounds — dark and bright stay in sync</div></div>
+    </div>
+    <p class="note" style="margin-top:22px">Faithful choices preserved (pink headings, red variables); the one enabled refinement is
+      <b>types in tacao/jaffa</b> — previously types and strings were both orange and visually identical.
+      Symbolic <code>operator</code>s now use Horizon’s muted grey, escapes and template punctuation are wired up,
+      and the mode-coloured statusline, cursorline, inlay hints and line numbers are all covered.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">05</span><h2>The Zed rebuild — audited</h2><span class="rule"></span></div>
+    <div class="stats">
+      <div class="stat"><div class="n">139<small> /139</small></div><div class="k">colour keys in Zed’s published schema — all defined, none missing</div></div>
+      <div class="stat"><div class="n">+28</div><div class="k">newer keys current Zed reads: minimap, diff hunks, version control, debugger</div></div>
+      <div class="stat"><div class="n">108</div><div class="k">syntax scopes — tree-sitter captures <i>and</i> LSP semantic tokens</div></div>
+      <div class="stat"><div class="n">8</div><div class="k">collaboration players, each with cursor · background · selection</div></div>
+    </div>
+
+    <p class="note" style="margin-top:24px">Every key below was checked against
+      <code>zed.dev/schema/themes/v0.2.0.json</code> and the colour struct in Zed’s current source, then
+      machine-validated: no missing schema key, no stray key, every value a legal <code>#RRGGBB</code> /
+      <code>#RRGGBBAA</code>, every <code>font_style</code> and <code>font_weight</code> inside the allowed enum.</p>
+
+    <div class="ledger" style="margin-top:22px">
+      <div class="grp"><div class="gh"><span class="gn">Chrome</span><span class="gc">✓ 24</span></div>
+        <div class="gk">background · surface · elevated_surface · title_bar (+inactive) · status_bar · toolbar · tab_bar · tab.active/inactive · pane.focused_border · pane_group.border</div></div>
+      <div class="grp"><div class="gh"><span class="gn">Elements &amp; borders</span><span class="gc">✓ 18</span></div>
+        <div class="gk">element.background/hover/active/selected/disabled + selection_background · ghost_element.× 5 · border.variant/focused/selected/transparent/disabled · drop_target.background/border</div></div>
+      <div class="grp"><div class="gh"><span class="gn">Text &amp; icons</span><span class="gc">✓ 11</span></div>
+        <div class="gk">text · text.muted/placeholder/disabled/accent · icon · icon.muted/disabled/placeholder/accent · link_text.hover</div></div>
+      <div class="grp"><div class="gh"><span class="gn">Editor surface</span><span class="gc">✓ 24</span></div>
+        <div class="gk">editor.foreground/background · gutter · subheader · active_line · highlighted_line · debugger_active_line · line_number + active + hover · invisible · wrap_guide ×2 · indent_guide ×2 · document_highlight.read/write/bracket · diff_hunk added/deleted (+hollow bg &amp; border)</div></div>
+      <div class="grp"><div class="gh"><span class="gn">Panels &amp; scrollbars</span><span class="gc">✓ 18</span></div>
+        <div class="gk">panel.background/focused_border · panel.indent_guide ×3 · panel.overlay ×2 · scrollbar.thumb ×4 · scrollbar.track ×2 · minimap.thumb ×4 · search.match/active_match</div></div>
+      <div class="grp"><div class="gh"><span class="gn">Status colours</span><span class="gc">✓ 42</span></div>
+        <div class="gk">conflict · created · deleted · error · hidden · hint · ignored · info · modified · predictive · renamed · success · unreachable · warning — each with its <span class="ok">.background</span> and <span class="ok">.border</span></div></div>
+      <div class="grp"><div class="gh"><span class="gn">Version control</span><span class="gc">✓ 10</span></div>
+        <div class="gk">added · modified · deleted · renamed · conflict · ignored · word_added · word_deleted · conflict_marker.ours/.theirs</div></div>
+      <div class="grp"><div class="gh"><span class="gn">Terminal</span><span class="gc">✓ 29</span></div>
+        <div class="gk">background · foreground · bright/dim foreground · ansi.background · 8 ANSI colours × normal/bright/dim</div></div>
+      <div class="grp"><div class="gh"><span class="gn">Players &amp; accents</span><span class="gc">✓ 8 + 8</span></div>
+        <div class="gk">8 collaborator slots (cursor · background · selection at 24% alpha) drawn from the Horizon hues, plus the <code style="font-size:11px">accents</code> array</div></div>
+    </div>
+
+    <p class="pal-title" style="margin:30px 0 10px">Syntax — the scopes Zed actually emits</p>
+    <p class="note" style="margin:0 0 14px">Zed resolves a tree-sitter capture right-to-left through its fallback chain, so
+      <code>function.method</code> only lands on <code>function</code> if the dotted scope isn’t defined. HorizonCode defines
+      the dotted scopes, so methods, builtins, macros and mutable bindings stay distinguishable instead of collapsing.
+      <b class="ok">Orange</b> marks scopes the official Zed themes leave undefined.</p>
+    <div class="scopes" id="scopes"></div>
+
+    <p class="note" style="margin-top:20px">LSP semantic tokens are covered too — with
+      <code>"semantic_tokens": "combined"</code> Zed layers token types over tree-sitter, looking for styles named
+      <code>type.class</code>, <code>enumMember</code>, <code>typeParameter</code>, <code>macro</code>,
+      <code>parameter</code>, <code>deprecated</code> and friends. All of them resolve.
+      <b>One gap, stated plainly:</b> the per-mode vim keys added to Zed’s colour struct aren’t in the published
+      schema yet and their JSON spelling isn’t documented, so they’re deliberately left out rather than guessed —
+      vim mode still reads correctly from the status colours.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="idx">06</span><h2>Activate</h2><span class="rule"></span></div>
+    <div class="cmd">
+<span class="hash"># Helix — active `custom` inherits the dark base</span>
+:config-reload   <span class="hash"># or</span>   :theme <span class="a">horizon-dark-custom</span> / <span class="a">horizon-bright-custom</span>
+
+<span class="hash"># Zed — drop HorizonCode.json in ~/.config/zed/themes/, then</span>
+<span class="hash"># theme picker (⌘K ⌘T), or in settings.json</span>
+"theme": "<span class="a">HorizonCode Dark</span>"   <span class="hash"># / "HorizonCode Bright"</span>
+
+<span class="hash"># iTerm2 — import schemes/HorizonCode.itermcolors ▸ Preferences ▸ Colors</span>
+
+<span class="hash"># WezTerm / Kitty / Alacritty / Ghostty — drop the generated</span>
+<span class="hash"># theme into the app's colours dir and select HorizonCode</span>
+    </div>
+    <footer><a href="https://github.com/xtrasmal/zed-theme-horizoncode">github.com/xtrasmal/zed-theme-horizoncode</a> · Zed extensions ▸ search <b style="color:#D5D8DA;font-weight:600">HorizonCode</b><br><br>HorizonCode · derived from <a href="https://github.com/jolaleye/horizon-theme-vscode">horizon-theme-vscode</a> (Horizon by Jonathan Olaleye, MIT) · Helix + Zed + iTerm2 + WezTerm + Kitty + 30 more</footer>
+  </section>
+</div>
+
+<template id="code-src"><div class="ln"><span class="t-kw">defmodule</span> <span class="t-typ">IchorInfra.Mail.SendMagicLinkEmail</span> <span class="t-kw">do</span></div>
+<div class="ln">  <span class="t-attr">@moduledoc</span> <span class="t-str">"""</span></div>
+<div class="ln">  <span class="t-str">Sends a magic link email with a SPA deep link.</span></div>
+<div class="ln">  <span class="t-str">"""</span></div>
+<div class="ln"> </div>
+<div class="ln">  <span class="t-kw">use</span> <span class="t-typ">AshAuthentication.Sender</span></div>
+<div class="ln">  <span class="t-kw">alias</span> <span class="t-typ">IchorInfra</span><span class="t-op">.</span><span class="t-brk">{</span><span class="t-typ">Mailer</span>, <span class="t-typ">Mail.Config</span><span class="t-brk">}</span></div>
+<div class="ln"> </div>
+<div class="ln">  <span class="t-attr">@impl</span> <span class="t-kw">true</span></div>
+<div class="ln">  <span class="t-kw">def</span> <span class="t-fn">send</span><span class="t-brk">(</span><span class="t-op">%</span><span class="t-brk">{</span><span class="t-ns">email:</span> <span class="t-var">email</span><span class="t-brk">}</span>, <span class="t-var">token</span>, <span class="t-var">_</span><span class="t-brk">)</span>, <span class="t-ns">do:</span> <span class="t-fn">deliver</span><span class="t-brk">(</span><span class="t-fn">to_string</span><span class="t-brk">(</span><span class="t-var">email</span><span class="t-brk">))</span></div>
+<div class="ln"> </div>
+<div class="ln">  <span class="t-kw">defp</span> <span class="t-fn">deliver</span><span class="t-brk">(</span><span class="t-var">email</span>, <span class="t-var">token</span><span class="t-brk">)</span> <span class="t-kw">do</span></div>
+<div class="ln">    <span class="t-fn">new</span><span class="t-brk">()</span></div>
+<div class="ln">    <span class="t-op">|&gt;</span> <span class="t-fn">from</span><span class="t-brk">({</span><span class="t-typ">Config</span><span class="t-op">.</span><span class="t-fn">sender_name</span><span class="t-brk">()</span>, <span class="t-typ">Config</span><span class="t-op">.</span><span class="t-fn">sender_email</span><span class="t-brk">()})</span></div>
+<div class="ln">    <span class="t-op">|&gt;</span> <span class="t-fn">to</span><span class="t-brk">(</span><span class="t-var">email</span><span class="t-brk">)</span></div>
+<div class="ln cur">    <span class="t-op">|&gt;</span> <span class="t-fn">subject</span><span class="t-brk">(</span><span class="sel"><span class="t-str">"Your login link"</span></span><span class="cursor t-brk">)</span></div>
+<div class="ln">    <span class="t-op">|&gt;</span> <span class="t-fn">html_body</span><span class="t-brk">(</span><span class="t-fn">body</span><span class="t-brk">(</span><span class="t-var">email</span>, <span class="t-var">token</span><span class="t-brk">))</span></div>
+<div class="ln">    <span class="t-op">|&gt;</span> <span class="t-typ">Mailer</span><span class="t-op">.</span><span class="t-fn">deliver!</span><span class="t-brk">()</span> <span class="t-com"># 🌅 horizon</span></div>
+<div class="ln">  <span class="t-kw">end</span></div>
+<div class="ln"><span class="t-kw">end</span></div></template>
+
+<script>
+  (function(){
+    var tpl = document.getElementById('code-src').innerHTML
+                .replace(/<\/div>\s*<div/g, '</div><div');  // the template's own newlines
+                                                             // would render as blank lines inside <pre>
+    document.querySelectorAll('pre.code').forEach(function(pre){ pre.innerHTML = tpl; });
+    document.querySelectorAll('.editor').forEach(function(ed){
+      var lns = ed.querySelectorAll('.code .ln');
+      var g = ed.querySelector('.gutter');
+      var out = '';
+      lns.forEach(function(ln,i){
+        out += '<span class="'+(ln.classList.contains('cur')?'g-cur':'')+'">'+(i+1)+'</span>';
+      });
+      g.innerHTML = out;
+    });
+
+    var dark = [
+      ['background','#1C1E26'],['text','#D5D8DA'],['comment / linenr','#6C6F93'],['operator','#BBBBBB'],
+      ['variable / tag','#E95678'],['string / const','#FAB795'],['type','#FAC29A'],['attribute','#F09383'],
+      ['function','#25B2BC'],['keyword','#B877DB'],['heading','#EE64AE'],['diff +','#27D796']
+    ];
+    var bright = [
+      ['background','#FDF0ED'],['text','#06060C'],['comment / linenr','#6C6F93'],['operator','#333333'],
+      ['variable / tag','#DA103F'],['string / const','#F6661E'],['type','#F77D26'],['attribute','#DC3318'],
+      ['function','#1D8991'],['keyword','#8A31B9'],['heading','#E73665'],['diff +','#0E9E68']
+    ];
+    function fill(id, arr){
+      var el = document.getElementById(id);
+      el.innerHTML = arr.map(function(p){
+        return '<div class="sw"><span class="chip" style="background:'+p[1]+'"></span>'+
+               '<span class="meta"><span class="role">'+p[0]+'</span><span class="hex">'+p[1]+'</span></span></div>';
+      }).join('');
+    }
+    fill('pal-dark', dark);
+    fill('pal-bright', bright);
+
+    // syntax scopes: base = shipped by Zed's own themes, new = added by HorizonCode
+    var base = ['attribute','boolean','comment','comment.doc','constant','constructor','embedded','emphasis',
+      'emphasis.strong','enum','function','hint','keyword','label','link_text','link_uri','namespace','number',
+      'operator','predictive','preproc','primary','property','punctuation','punctuation.bracket',
+      'punctuation.delimiter','punctuation.list_marker','punctuation.markup','punctuation.special','selector',
+      'selector.pseudo','string','string.escape','string.regex','string.special','string.special.symbol','tag',
+      'text.literal','title','type','variable','variable.parameter','variable.special','variant','diff.plus',
+      'diff.minus'];
+    var extra = ['attribute.special','comment.documentation','concept','constant.builtin','constructor.builtin',
+      'enum.member','function.builtin','function.call','function.decorator','function.definition','function.macro',
+      'function.method','function.method.builtin','function.special','function.special.definition','keyword.control',
+      'keyword.exception','keyword.function','keyword.import','keyword.operator','keyword.return','keyword.type',
+      'module','number.float','operator.special','property.builtin','string.doc','string.special.path',
+      'string.special.url','tag.builtin','tag.delimiter','tag.doctype','text','text.reference','title.1','title.2',
+      'title.3','type.builtin','type.interface','type.parameter','type.super','variable.builtin','variable.member',
+      'variable.mutable','variable.parameter.builtin','variable.readonly','class','type.class','interface','struct',
+      'type.struct','enumMember','typeParameter','parameter','method','macro','decorator','event','modifier',
+      'regexp','deprecated','unresolvedReference'];
+    document.getElementById('scopes').innerHTML =
+      base.map(function(s){ return '<span class="scope">'+s+'</span>'; }).join('') +
+      extra.map(function(s){ return '<span class="scope new">'+s+'</span>'; }).join('');
+  })();
+</script>
+
+</body>
+</html>
